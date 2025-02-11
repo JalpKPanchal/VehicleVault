@@ -51,7 +51,7 @@ public class AuthController {
                 return "Login";
             }
             session.setAttribute("loggedUser", userOpt.get());
-            return "redirect:/dashboard";
+            return "Dashboard";
         }
         model.addAttribute("error", "Invalid credentials");
         return "Login";
@@ -71,7 +71,8 @@ public class AuthController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate();
+        session.invalidate(); // Destroy session
         return "redirect:/auth/login";
+ // Redirect to login page
     }
 }
