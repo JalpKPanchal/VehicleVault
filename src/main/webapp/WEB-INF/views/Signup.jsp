@@ -63,15 +63,6 @@
                 </select>
             </div>
 
-            <div class="mb-3">
-                <label>Role</label>
-                <select name="role" class="form-control">
-                    <option value="USER">User</option>
-                    <option value="ADMIN">Admin</option>
-                    <option value="TECHNICIAN">Technician</option>
-                </select>
-            </div>
-
             <button type="submit" class="btn btn-primary w-100">Sign Up</button>
             <div class="text-center mt-3">
                 <a href="Login.jsp" class="text-light">Already have an account? Login</a>

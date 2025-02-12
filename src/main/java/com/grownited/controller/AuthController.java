@@ -1,8 +1,8 @@
 package com.grownited.controller;
 
 import com.grownited.entity.UserEntity;
+import com.grownited.entity.UserEntity.Role;
 import com.grownited.repository.UserRepository;
-import com.grownited.service.OtpService;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +33,7 @@ public class AuthController {
     public String signup(@ModelAttribute UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setStatus(UserEntity.AccountStatus.ACTIVE);
+        user.setRole(Role.USER);
         userRepository.save(user);
         return "redirect:/auth/login";
     }
