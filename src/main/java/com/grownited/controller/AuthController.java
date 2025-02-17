@@ -1,12 +1,8 @@
 package com.grownited.controller;
 
 import com.grownited.entity.UserEntity;
-import com.grownited.entity.UserEntity.Role;
-import com.grownited.repository.UserRepository;
-
-import jakarta.servlet.http.HttpSession;
+import com.grownited.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,62 +14,57 @@ import java.util.Optional;
 public class AuthController {
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-  
+    private AuthService authService;
 
-    @GetMapping("/signup")
-    public String showSignupForm(Model model) {
-        model.addAttribute("user", new UserEntity());
-        return "Signup";
-    }
-
-    @PostMapping("/signup")
-    public String signup(@ModelAttribute UserEntity user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setStatus(UserEntity.AccountStatus.ACTIVE);
-        user.setRole(Role.USER);
-        userRepository.save(user);
-        return "redirect:/auth/login";
-    }
-
+    // Show Login Page
     @GetMapping("/login")
-    public String showLoginForm() {
-        return "Login";
+    public String showLoginPage() {
+        return "Login"; // Corresponding JSP page
     }
 
+    // Handle Login
     @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
-        Optional<UserEntity> userOpt = userRepository.findByEmail(email);
-        if (userOpt.isPresent() && passwordEncoder.matches(password, userOpt.get().getPassword())) {
-            if (userOpt.get().getStatus() == UserEntity.AccountStatus.DISABLED) {
-                model.addAttribute("error", "Your account is disabled.");
-                return "Login";
-            }
-            session.setAttribute("loggedUser", userOpt.get());
-            return "Dashboard";
+    public String loginUser(@RequestParam String email, @RequestParam String password, Model model) {
+        Optional<UserEntity> userOpt = authService.authenticateUser(email, password);
+        if (userOpt.isPresent()) {
+            model.addAttribute("user", userOpt.get());
+            return "Dashboard"; // Redirect to user dashboard
+        } else {
+            model.addAttribute("error", "Invalid email or password");
+            return "Login";
         }
-        model.addAttribute("error", "Invalid credentials");
+    }
+
+    // Show Register Page
+    @GetMapping("/register")
+    public String showRegisterPage(Model model) {
+        model.addAttribute("user", new UserEntity());
+        return "Register"; // Corresponding JSP page
+    }
+
+    // Handle User Registration
+    @PostMapping("/register")
+    public String registerUser(@ModelAttribute("user") UserEntity user, Model model) {
+        authService.registerUser(user);
+        model.addAttribute("message", "Registration successful! Please log in.");
         return "Login";
     }
 
-
+    // Show Forgot Password Page
     @GetMapping("/forgot-password")
-    public String showForgotPasswordForm() {
-        return "Forgot-Password";
+    public String showForgotPasswordPage() {
+        return "ForgotPassword"; // Corresponding JSP page
     }
 
-   
-  
-
-   
-
-
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate(); // Destroy session
-        return "redirect:/auth/login";
- // Redirect to login page
+    // Handle Forgot Password
+    @PostMapping("/forgot-password")
+    public String resetPassword(@RequestParam String email, @RequestParam String newPassword, Model model) {
+        boolean success = authService.resetPassword(email, newPassword);
+        if (success) {
+            model.addAttribute("message", "Password reset successful. Please log in.");
+        } else {
+            model.addAttribute("error", "Email not found.");
+        }
+        return "Login";
     }
 }
