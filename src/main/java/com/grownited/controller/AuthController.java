@@ -70,15 +70,5 @@ public class AuthController {
         return "ForgotPassword"; // Corresponding JSP page
     }
 
-    // Handle Forgot Password
-    @PostMapping("/forgot-password")
-    public String resetPassword(@RequestParam String email, @RequestParam String newPassword, Model model) {
-        boolean success = authService.resetPassword(email, newPassword);
-        if (success) {
-            model.addAttribute("message", "Password reset successful. Please log in.");
-        } else {
-            model.addAttribute("error", "Email not found.");
-        }
-        return "Login";
-    }
+ 
 }

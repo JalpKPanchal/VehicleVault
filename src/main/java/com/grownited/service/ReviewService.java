@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ReviewService {
@@ -32,7 +33,7 @@ public class ReviewService {
         return reviewRepository.findByCarCarId(carId);
     }
 
-    public void addReview(ReviewEntity review, Long carId, Long userId) {
+    public void addReview(ReviewEntity review, Long carId, UUID userId) {
         CarEntity car = carRepository.findById(carId).orElseThrow(() -> new RuntimeException("Car not found"));
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         review.setCar(car);
@@ -54,7 +55,6 @@ public class ReviewService {
             reviewRepository.save(existingReview);
         }
     }
-
     public void deleteReview(Long id) {
         reviewRepository.deleteById(id);
     }

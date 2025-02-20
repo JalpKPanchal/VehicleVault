@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/review")
@@ -41,7 +42,7 @@ public class ReviewController {
     }
 
     @PostMapping("/save")
-    public String saveReview(@ModelAttribute("review") ReviewEntity review, @RequestParam Long carId, @RequestParam Long userId) {
+    public String saveReview(@ModelAttribute("review") ReviewEntity review, @RequestParam Long carId, @RequestParam UUID userId) {
         reviewService.addReview(review, carId, userId);
         return "redirect:/review";
     }

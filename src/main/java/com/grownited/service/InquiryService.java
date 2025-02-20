@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class InquiryService {
@@ -35,7 +36,7 @@ public class InquiryService {
     }
 
     // Add a new inquiry
-    public void addInquiry(InquiryEntity inquiry, Long carId, Long userId) {
+    public void addInquiry(InquiryEntity inquiry, Long carId, UUID userId) {
         CarEntity car = carRepository.findById(carId).orElseThrow(() -> new RuntimeException("Car not found"));
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         inquiry.setCar(car);

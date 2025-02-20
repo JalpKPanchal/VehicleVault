@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/inquiry")
@@ -46,7 +47,7 @@ public class InquiryController {
     @PostMapping("/save")
     public String saveInquiry(@ModelAttribute("inquiry") InquiryEntity inquiry, 
                               @RequestParam Long carId, 
-                              @RequestParam Long userId) {
+                              @RequestParam UUID userId) {
         inquiryService.addInquiry(inquiry, carId, userId);
         return "redirect:/inquiry";
     }
