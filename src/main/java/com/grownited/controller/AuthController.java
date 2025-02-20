@@ -1,6 +1,7 @@
 package com.grownited.controller;
 
 import com.grownited.entity.UserEntity;
+import com.grownited.entity.UserEntity.Role;
 import com.grownited.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,24 +17,37 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    // Show Login Page
-    @GetMapping("/login")
-    public String showLoginPage() {
-        return "Login"; // Corresponding JSP page
-    }
+  
 
     // Handle Login
     @PostMapping("/login")
     public String loginUser(@RequestParam String email, @RequestParam String password, Model model) {
         Optional<UserEntity> userOpt = authService.authenticateUser(email, password);
+        
         if (userOpt.isPresent()) {
-            model.addAttribute("user", userOpt.get());
-            return "Dashboard"; // Redirect to user dashboard
+            UserEntity user = userOpt.get();
+            model.addAttribute("user", user);
+
+            Role userRole = user.getRole(); // Use ENUM instead of String
+            if (userRole != null) {
+                switch (userRole) {
+                    case ADMIN:
+                        return "AdminDashboard"; 
+                    case USER:
+                        return "UserDashboard"; 
+                    case TECHNICIAN:
+                        return "TechnicianDashboard"; 
+                }
+            }
+            model.addAttribute("error", "Invalid role assigned.");
+            return "Login";
         } else {
             model.addAttribute("error", "Invalid email or password");
             return "Login";
         }
     }
+
+
 
     // Show Register Page
     @GetMapping("/register")
