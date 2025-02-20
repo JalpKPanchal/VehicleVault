@@ -50,10 +50,10 @@ public class AuthController {
 
 
     // Show Register Page
-    @GetMapping("/register")
+    @GetMapping("/signup")
     public String showRegisterPage(Model model) {
         model.addAttribute("user", new UserEntity());
-        return "Register"; // Corresponding JSP page
+        return "Signup"; // Corresponding JSP page
     }
 
     // Handle User Registration

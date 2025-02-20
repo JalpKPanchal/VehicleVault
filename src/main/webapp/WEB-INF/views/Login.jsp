@@ -40,8 +40,8 @@
             <button type="submit" class="btn btn-primary w-100">Login</button>
 
             <div class="text-center mt-3">
-				<a href="forgot-password" class="text-light">Forgot Password?</a>
-                <a href="Signup.jsp" class="text-light">Sign Up</a>
+				<a href="${pageContext.request.contextPath}/auth/forgot-password" class="text-light">Forgot Password?</a>
+                <a href="${pageContext.request.contextPath}/auth/signup" class="text-light">Sign Up</a>
             </div>
         </form>
     </div>
