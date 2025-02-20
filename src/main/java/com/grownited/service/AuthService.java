@@ -21,10 +21,14 @@ public class AuthService {
 
     // Register new user
     public UserEntity registerUser(UserEntity user) {
-        user.setUserId(UUID.randomUUID());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getRole() == null) {
+            user.setRole(UserEntity.Role.USER); // Assign default role
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword())); // Encrypt password
         return userRepository.save(user);
     }
+
+
 
     // Authenticate user
     public Optional<UserEntity> authenticateUser(String email, String rawPassword) {
