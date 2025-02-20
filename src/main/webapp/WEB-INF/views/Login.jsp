@@ -26,7 +26,7 @@
         <% if(request.getAttribute("error") != null) { %>
             <div class="alert alert-danger"><%= request.getAttribute("error") %></div>
         <% } %>
-        <form action="login" method="post">
+        <form action="${pageContext.request.contextPath}/auth/login" method="post">
             <div class="mb-3">
                 <label>Email</label>
                 <input type="email" name="email" class="form-control" required>

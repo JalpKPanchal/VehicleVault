@@ -57,7 +57,7 @@ public class AuthController {
     }
 
     // Handle User Registration
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public String registerUser(@ModelAttribute("user") UserEntity user, Model model) {
         authService.registerUser(user);
         model.addAttribute("message", "Registration successful! Please log in.");

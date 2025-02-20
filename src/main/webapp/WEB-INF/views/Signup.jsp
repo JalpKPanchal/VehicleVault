@@ -23,7 +23,7 @@
 <body>
     <div class="container">
         <h2 class="text-center">Create an Account</h2>
-        <form action="signup" method="post" onsubmit="return validateForm()">
+        <form action="${pageContext.request.contextPath}/auth/signup" method="post" onsubmit="return validateForm()">
             <div class="mb-3">
                 <label>First Name</label>
                 <input type="text" name="firstName" class="form-control" required>
@@ -65,7 +65,7 @@
 
             <button type="submit" class="btn btn-primary w-100">Sign Up</button>
             <div class="text-center mt-3">
-                <a href="Login.jsp" class="text-light">Already have an account? Login</a>
+                <a href="${pageContext.request.contextPath}/" class="text-light">Already have an account? Login</a>
             </div>
         </form>
     </div>
