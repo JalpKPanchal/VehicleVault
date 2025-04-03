@@ -67,7 +67,7 @@ public class AuthController {
     // Show Forgot Password Page
     @GetMapping("/forgot-password")
     public String showForgotPasswordPage() {
-        return "ForgotPassword"; // Corresponding JSP page
+        return "Forgot-Password"; // Corresponding JSP page
     }
 
  

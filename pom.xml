@@ -90,7 +90,12 @@
         <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
        
     </dependency>
-
+	<!-- https://mvnrepository.com/artifact/net.authorize/anet-java-sdk -->
+<dependency>
+    <groupId>net.authorize</groupId>
+    <artifactId>anet-java-sdk</artifactId>
+    <version>3.0.0</version>
+</dependency>
 
 	</dependencies>
 

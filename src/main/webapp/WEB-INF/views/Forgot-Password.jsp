@@ -31,7 +31,8 @@
             </div>
         <% } %>
 
-        <form action="forgot-password" method="post">
+       <form action="${pageContext.request.contextPath}/auth/forgot-password" method="post">
+
             <div class="mb-3">
                 <label for="email" class="form-label">Email Address</label>
                 <input type="email" class="form-control" id="email" name="email" required>
